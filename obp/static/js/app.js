@@ -640,17 +640,22 @@ async function initInventory() {
   });
   $("#product-form")?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    const submitButton = form.querySelector('[type="submit"]');
+    submitButton.disabled = true;
     try {
       await api("/api/products", {
         method: "POST",
-        body: JSON.stringify(serializeForm(event.currentTarget)),
+        body: JSON.stringify(serializeForm(form)),
       });
-      event.currentTarget.closest("dialog").close();
-      event.currentTarget.reset();
+      form.closest("dialog").close();
+      form.reset();
       toast("Product added. Receive stock through a supplier purchase order.");
       await loadProducts();
     } catch (error) {
       toast(error.message, true);
+    } finally {
+      submitButton.disabled = false;
     }
   });
   $("#product-edit-form")?.addEventListener("submit", async (event) => {
@@ -733,6 +738,8 @@ async function initInventory() {
   $("#package-form")?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
+    const submitButton = form.querySelector('[type="submit"]');
+    submitButton.disabled = true;
     const components = $$(".package-component", $("#package-components")).map(
       (row) => ({
         product_id: row.querySelector('[name="component_product"]').value,
@@ -756,6 +763,8 @@ async function initInventory() {
       await loadProducts();
     } catch (error) {
       toast(error.message, true);
+    } finally {
+      submitButton.disabled = false;
     }
   });
   $("#add-package-component")?.addEventListener("click", () => {
@@ -859,17 +868,22 @@ async function initSuppliers() {
   }
   $("#supplier-form")?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    const submitButton = form.querySelector('[type="submit"]');
+    submitButton.disabled = true;
     try {
       await api("/api/suppliers", {
         method: "POST",
-        body: JSON.stringify(serializeForm(event.currentTarget)),
+        body: JSON.stringify(serializeForm(form)),
       });
-      event.currentTarget.closest("dialog").close();
-      event.currentTarget.reset();
+      form.closest("dialog").close();
+      form.reset();
       toast("Supplier saved.");
       await loadSuppliers();
     } catch (error) {
       toast(error.message, true);
+    } finally {
+      submitButton.disabled = false;
     }
   });
   $("#supplier-search")?.addEventListener("input", loadSuppliers);

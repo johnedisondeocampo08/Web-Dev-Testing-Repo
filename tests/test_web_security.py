@@ -1,12 +1,16 @@
+from contextlib import contextmanager
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from flask import g
+from psycopg.errors import UniqueViolation
 
 from obp import create_app
 from obp.permissions import has_permission
 from obp.reports import calculate_profit
+from obp.routes import package_create, product_create
 
 
 class WebSecurityTests(unittest.TestCase):
@@ -73,6 +77,62 @@ class WebSecurityTests(unittest.TestCase):
             self.assertFalse(has_permission("users.manage"))
             g.user = {"permissions": ["*"]}
             self.assertTrue(has_permission("backup.manage"))
+
+    def test_duplicate_product_sku_returns_conflict_instead_of_server_error(self):
+        @contextmanager
+        def duplicate_sku():
+            class Database:
+                def execute(self, *_args, **_kwargs):
+                    raise UniqueViolation("duplicate SKU")
+
+            yield Database()
+
+        with self.app.test_request_context(
+            "/api/products",
+            method="POST",
+            json={
+                "sku": "TECH02",
+                "name": "Product",
+                "selling_price": "10",
+                "acquisition_cost": "5",
+            },
+        ):
+            g.user = {"id": 1, "permissions": ["products.manage"]}
+            with patch("obp.routes.write_transaction", duplicate_sku):
+                response, status = product_create()
+
+        self.assertEqual(status, 409)
+        self.assertEqual(
+            response.get_json()["error"], "A product with this SKU already exists."
+        )
+
+    def test_duplicate_package_sku_returns_conflict_instead_of_server_error(self):
+        @contextmanager
+        def duplicate_sku():
+            class Database:
+                def execute(self, *_args, **_kwargs):
+                    raise UniqueViolation("duplicate SKU")
+
+            yield Database()
+
+        with self.app.test_request_context(
+            "/api/packages",
+            method="POST",
+            json={
+                "sku": "BUNDLE01",
+                "name": "Package",
+                "selling_price": "10",
+                "components": [{"product_id": "1", "quantity": "1"}],
+            },
+        ):
+            g.user = {"id": 1, "permissions": ["products.manage"]}
+            with patch("obp.routes.write_transaction", duplicate_sku):
+                response, status = package_create()
+
+        self.assertEqual(status, 409)
+        self.assertEqual(
+            response.get_json()["error"], "A package with this SKU already exists."
+        )
 
 
 class ProfitCalculationTests(unittest.TestCase):

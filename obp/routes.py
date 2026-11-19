@@ -5,7 +5,7 @@ from datetime import date, datetime
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from html import escape
 
-from psycopg.errors import UniqueViolation
+from psycopg.errors import ForeignKeyViolation, UniqueViolation
 from flask import (
     Blueprint,
     abort,
@@ -295,6 +295,10 @@ def product_create():
         return jsonify(id=product["id"], message="Product created."), 201
     except (ValueError, TypeError) as error:
         return _json_error(error)
+    except UniqueViolation:
+        return _json_error("A product with this SKU already exists.", 409)
+    except ForeignKeyViolation:
+        return _json_error("Choose an existing category and supplier.", 400)
 
 
 @bp.patch("/api/products/<int:product_id>")
@@ -361,6 +365,10 @@ def package_create():
         return jsonify(id=package["id"], message="Package created."), 201
     except (ValueError, TypeError) as error:
         return _json_error(error)
+    except UniqueViolation:
+        return _json_error("A package with this SKU already exists.", 409)
+    except ForeignKeyViolation:
+        return _json_error("Choose existing products for this package.", 400)
 
 
 @bp.post("/api/products/<int:product_id>/deactivate")
