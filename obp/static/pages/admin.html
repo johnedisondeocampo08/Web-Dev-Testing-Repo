@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Administration · OBP</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="/static/js/app.js" defer></script>
+  </head>
+  <body data-page="admin">
+    <main id="page-content">
+      <section class="page-heading">
+        <div>
+          <span class="eyebrow">ACCESS &amp; DATA PROTECTION</span>
+          <h1>Administration</h1>
+          <p class="muted">
+            Manage staff roles, review important actions, and protect system
+            records.
+          </p>
+        </div>
+      </section>
+      <section class="card" data-permission="users.manage">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">STAFF ACCOUNTS</span>
+            <h2>User management</h2>
+          </div>
+        </div>
+        <form id="user-form" class="form-grid user-create-form">
+          <label
+            >Username<input name="username" required maxlength="80" /></label
+          ><label
+            >Display name<input
+              name="display_name"
+              required
+              maxlength="160" /></label
+          ><label
+            >Temporary password<input
+              name="password"
+              type="password"
+              minlength="12"
+              required
+              autocomplete="new-password" /></label
+          ><label
+            >Role<select name="role_id" id="new-user-role" required></select
+          ></label>
+          <div class="full-span">
+            <button class="button button-primary" type="submit">
+              Create staff account
+            </button>
+          </div>
+        </form>
+        <div class="table-wrap table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Staff member</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table">
+              <tr>
+                <td colspan="5" class="empty-cell">Loading staff…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section
+        class="card table-card"
+        data-permission="stock.adjustments.approve"
+      >
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">STOCK CONTROL</span>
+            <h2>Pending adjustment approvals</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Requested</th>
+                <th>Product</th>
+                <th>Movement</th>
+                <th>Quantity</th>
+                <th>Reason</th>
+                <th>Requested by</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="adjustment-approvals">
+              <tr>
+                <td colspan="7" class="empty-cell">Loading requests…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="card table-card" data-permission="roles.manage">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">ACCESS CONTROL</span>
+            <h2>Role permissions</h2>
+            <p class="muted">
+              The server checks permissions on every protected action.
+            </p>
+          </div>
+        </div>
+        <div id="role-grid" class="role-grid"></div>
+      </section>
+      <section class="split-grid">
+        <article class="card" data-permission="backup.manage">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">BACKUP &amp; RESTORE</span>
+              <h2>Database backup</h2>
+            </div>
+          </div>
+          <p class="muted">Create a backup or restore a saved backup.</p>
+          <button id="backup-now" class="button button-primary" type="button">
+            Create backup now
+          </button>
+          <form id="restore-form" class="form-stack restore-form">
+            <label
+              >Backup<select name="filename" id="backup-list" required>
+                <option value="">Loading backups…</option>
+              </select></label
+            ><label
+              >Type <strong>RESTORE</strong> to confirm<input
+                name="confirmation"
+                required
+                autocomplete="off"
+                placeholder="RESTORE" /></label
+            ><button class="button button-danger" type="submit">
+              Restore database
+            </button>
+          </form>
+          <div class="table-wrap table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Backup</th>
+                  <th>Created</th>
+                  <th>Actor</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="backup-log-table">
+                <tr>
+                  <td colspan="4" class="empty-cell">
+                    Loading backup history…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="card" data-permission="users.manage">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">ACTIVITY</span>
+              <h2>Administrative activity</h2>
+            </div>
+          </div>
+          <div id="activity-list" class="activity-list">Loading activity…</div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Suppliers &amp; restocking · OBP</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="/static/js/app.js" defer></script>
+  </head>
+  <body data-page="suppliers">
+    <main id="page-content">
+      <section class="page-heading">
+        <div>
+          <span class="eyebrow">PURCHASING &amp; RECEIVING</span>
+          <h1>Suppliers &amp; restocking</h1>
+          <p class="muted">
+            Track supplier orders from placement through delivery.
+          </p>
+        </div>
+        <button
+          class="button button-primary"
+          type="button"
+          data-open-dialog="supplier-dialog"
+        >
+          ＋ Add supplier
+        </button>
+      </section>
+      <section class="split-grid">
+        <article class="card">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">SUPPLIER DIRECTORY</span>
+              <h2>Active suppliers</h2>
+            </div>
+          </div>
+          <label class="sr-only" for="supplier-search">Search suppliers</label
+          ><input
+            id="supplier-search"
+            class="search-input"
+            type="search"
+            placeholder="Search supplier or contact…"
+          />
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Supplier</th>
+                  <th>Contact</th>
+                  <th>Phone / email</th>
+                  <th>Orders</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="supplier-table">
+                <tr>
+                  <td colspan="5" class="empty-cell">Loading suppliers…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="card">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">PURCHASE ORDERS</span>
+              <h2>Create a restock order</h2>
+            </div>
+          </div>
+          <form id="purchase-order-form" class="form-stack">
+            <label
+              >Supplier<select
+                name="supplier_id"
+                id="po-supplier"
+                required
+              ></select></label
+            ><label
+              >Expected delivery date<input
+                name="expected_date"
+                type="date" /></label
+            ><label
+              >Order status<select name="status">
+                <option value="ordered">Order now</option>
+                <option value="draft">Save as draft</option>
+              </select></label
+            >
+            <div class="form-grid">
+              <label
+                >Product<select
+                  name="product_id"
+                  id="po-product"
+                  required
+                ></select></label
+              ><label
+                >Quantity<input
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  value="10"
+                  required /></label
+              ><label
+                >Expected unit cost<input
+                  name="unit_cost"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  required
+              /></label>
+            </div>
+            <button class="button button-primary" type="submit">
+              Create purchase order
+            </button>
+          </form>
+        </article>
+      </section>
+      <section class="card table-card">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">OPEN &amp; RECENT ORDERS</span>
+            <h2>Restocking history</h2>
+          </div>
+          <button
+            class="button button-quiet button-small"
+            data-refresh="purchase-orders"
+            type="button"
+          >
+            Refresh
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Supplier</th>
+                <th>Expected date</th>
+                <th>Status</th>
+                <th>Units open</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="purchase-order-table">
+              <tr>
+                <td colspan="6" class="empty-cell">Loading purchase orders…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <dialog id="supplier-dialog" class="modal">
+        <form id="supplier-form" class="modal-content">
+          <div class="section-heading">
+            <h2>Add supplier</h2>
+            <button class="icon-button" type="button" data-close-dialog>
+              ×
+            </button>
+          </div>
+          <div class="form-grid">
+            <label
+              >Supplier name<input
+                name="name"
+                required
+                maxlength="160" /></label
+            ><label
+              >Contact person<input
+                name="contact_person"
+                maxlength="160" /></label
+            ><label>Phone<input name="phone" maxlength="60" /></label
+            ><label
+              >Email<input name="email" type="email" maxlength="160" /></label
+            ><label class="full-span"
+              >Address<input name="address" maxlength="300" /></label
+            ><label class="full-span"
+              >Purchasing notes<textarea
+                name="notes"
+                rows="2"
+                maxlength="500"
+              ></textarea>
+            </label>
+          </div>
+          <div class="modal-actions">
+            <button class="button button-quiet" type="button" data-close-dialog>
+              Cancel</button
+            ><button class="button button-primary" type="submit">
+              Save supplier
+            </button>
+          </div>
+        </form>
+      </dialog>
+      <dialog id="supplier-edit-dialog" class="modal">
+        <form id="supplier-edit-form" class="modal-content">
+          <div class="section-heading">
+            <h2>Edit supplier</h2>
+            <button class="icon-button" type="button" data-close-dialog>
+              ×
+            </button>
+          </div>
+          <input type="hidden" name="supplier_id" />
+          <div class="form-grid">
+            <label
+              >Supplier name<input
+                name="name"
+                required
+                maxlength="160" /></label
+            ><label
+              >Contact person<input
+                name="contact_person"
+                maxlength="160" /></label
+            ><label>Phone<input name="phone" maxlength="60" /></label
+            ><label
+              >Email<input name="email" type="email" maxlength="160" /></label
+            ><label class="full-span"
+              >Address<input name="address" maxlength="300" /></label
+            ><label class="full-span"
+              >Purchasing notes<textarea
+                name="notes"
+                rows="2"
+                maxlength="500"
+              ></textarea>
+            </label>
+          </div>
+          <div class="modal-actions">
+            <button class="button button-quiet" type="button" data-close-dialog>
+              Cancel</button
+            ><button class="button button-primary" type="submit">
+              Save changes
+            </button>
+          </div>
+        </form>
+      </dialog>
+      <dialog id="receive-dialog" class="modal">
+        <form id="receive-form" class="modal-content">
+          <div class="section-heading">
+            <h2>Post accepted quantities</h2>
+            <button class="icon-button" type="button" data-close-dialog>
+              ×
+            </button>
+          </div>
+          <input type="hidden" name="order_id" id="receive-order-id" />
+          <p id="receive-order-label" class="muted"></p>
+          <label
+            >Unique delivery reference<input
+              name="reference"
+              required
+              maxlength="100"
+          /></label>
+          <div id="receive-lines" class="receive-lines"></div>
+          <div class="modal-actions">
+            <button class="button button-quiet" type="button" data-close-dialog>
+              Cancel</button
+            ><button class="button button-primary" type="submit">
+              Post receipt
+            </button>
+          </div>
+        </form>
+      </dialog>
+    </main>
+  </body>
+</html>

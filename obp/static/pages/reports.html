@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sales reports · OBP</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="/static/js/app.js" defer></script>
+  </head>
+  <body data-page="reports">
+    <main id="page-content">
+      <section class="page-heading">
+        <div>
+          <span class="eyebrow">BUSINESS PERFORMANCE</span>
+          <h1>Sales reports</h1>
+          <p class="muted">
+            Finalized dispatches and recorded returns are reflected in report
+            totals.
+          </p>
+        </div>
+        <button
+          class="button button-secondary"
+          type="button"
+          onclick="window.print()"
+        >
+          Print report
+        </button>
+      </section>
+      <section class="card report-controls">
+        <div class="report-tabs" role="tablist" aria-label="Report type">
+          <button
+            class="report-tab active"
+            role="tab"
+            aria-selected="true"
+            data-report="daily"
+          >
+            Daily sales</button
+          ><button
+            class="report-tab"
+            role="tab"
+            aria-selected="false"
+            data-report="monthly"
+          >
+            Monthly sales</button
+          ><button
+            class="report-tab"
+            role="tab"
+            aria-selected="false"
+            data-report="best"
+          >
+            Best sellers</button
+          ><button
+            class="report-tab"
+            role="tab"
+            aria-selected="false"
+            data-report="profit"
+          >
+            Profit
+          </button>
+        </div>
+        <form id="report-filter" class="filter-row">
+          <label class="report-date-label"
+            >Date<input name="date" type="date" /></label
+          ><label class="report-month-label hidden"
+            >Month<input name="month" type="month" /></label
+          ><label class="range-field hidden"
+            >From<input name="from" type="date" /></label
+          ><label class="range-field hidden"
+            >To<input name="to" type="date" /></label
+          ><label class="category-field hidden"
+            >Category<select name="category_id">
+              <option value="">All categories</option>
+            </select></label
+          ><button class="button button-primary button-small" type="submit">
+            Run report</button
+          ><a
+            class="button button-quiet button-small"
+            id="export-report"
+            href="/api/reports/export"
+            >Export CSV</a
+          >
+        </form>
+      </section>
+      <section class="card report-result" id="report-result" aria-live="polite">
+        <div class="loading-state">Loading daily sales…</div>
+      </section>
+      <section class="report-note">
+        <span>ⓘ</span>
+        <p>
+          <strong>Calculation note</strong> Sales are VAT-exclusive, less
+          discounts and returns. Gross profit is net sales less cost of goods
+          sold; recorded inventory losses are shown separately.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Overview · Optimum Business Products</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="/static/js/app.js" defer></script>
+  </head>
+  <body data-page="dashboard">
+    <main id="page-content">
+      <section class="page-heading">
+        <div>
+          <span id="today-label" class="eyebrow"></span>
+          <h1 id="welcome-message">Welcome to OBP.</h1>
+          <p class="muted">
+            Here’s what’s happening across your business today.
+          </p>
+        </div>
+        <a
+          class="button button-primary"
+          href="/sales"
+          data-permission="sales.create"
+          >＋ New sale</a
+        >
+      </section>
+      <section class="metric-grid" aria-label="Business summary">
+        <article class="metric-card" data-permission="reports.read sales.read">
+          <div class="metric-top">
+            <span>Today's sales</span
+            ><span class="metric-icon teal-icon">₱</span>
+          </div>
+          <strong id="today-sales" class="metric-value">₱0.00</strong
+          ><small class="metric-foot">Dispatched transactions</small>
+        </article>
+        <article class="metric-card" data-permission="products.read">
+          <div class="metric-top">
+            <span>Active products</span
+            ><span class="metric-icon aqua-icon">▤</span>
+          </div>
+          <strong id="product-count" class="metric-value">0</strong
+          ><small class="metric-foot">In your catalog</small>
+        </article>
+        <article class="metric-card" data-permission="products.read">
+          <div class="metric-top">
+            <span>Low-stock alerts</span
+            ><span class="metric-icon orange-icon">!</span>
+          </div>
+          <strong id="low-stock-count" class="metric-value">0</strong
+          ><small class="metric-foot">At or below reorder level</small>
+        </article>
+        <article class="metric-card" data-permission="restocking.manage">
+          <div class="metric-top">
+            <span>Open purchase orders</span
+            ><span class="metric-icon green-icon">↗</span>
+          </div>
+          <strong id="open-order-count" class="metric-value">0</strong
+          ><small class="metric-foot">Awaiting full receipt</small>
+        </article>
+      </section>
+      <section class="dashboard-grid">
+        <article class="card" data-permission="products.read">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">INVENTORY HEALTH</span>
+              <h2>Needs attention</h2>
+            </div>
+            <a class="text-link" href="/inventory">View inventory →</a>
+          </div>
+          <div id="inventory-alerts" class="table-wrap">
+            <div class="empty-inline">Loading stock alerts…</div>
+          </div>
+        </article>
+        <article class="card" data-permission="sales.read">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">LATEST ACTIVITY</span>
+              <h2>Recent sales</h2>
+            </div>
+            <a class="text-link" href="/sales" data-permission="sales.create"
+              >Open sales →</a
+            >
+          </div>
+          <div id="recent-sales" class="table-wrap">
+            <div class="empty-inline">Loading recent sales…</div>
+          </div>
+        </article>
+      </section>
+      <section class="quick-actions">
+        <div>
+          <span class="eyebrow">YOUR WORKSPACE</span>
+          <h2>Pick up where you left off</h2>
+        </div>
+        <div class="quick-link-grid">
+          <a href="/sales" data-permission="sales.create"
+            ><span>▣</span><strong>Start a sale</strong
+            ><small>Build a cart and record payment</small><b>→</b></a
+          >
+          <a href="/inventory" data-permission="products.read"
+            ><span>▤</span><strong>Check inventory</strong
+            ><small>See stock and movement history</small><b>→</b></a
+          >
+          <a href="/suppliers" data-permission="suppliers.manage"
+            ><span>◉</span><strong>Receive a delivery</strong
+            ><small>Post accepted supplier quantities</small><b>→</b></a
+          >
+          <a href="/reports" data-permission="reports.read"
+            ><span>▥</span><strong>Review reports</strong
+            ><small>Understand sales and profitability</small><b>→</b></a
+          >
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sales processing · OBP</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="/static/js/app.js" defer></script>
+  </head>
+  <body data-page="sales">
+    <main id="page-content">
+      <section class="page-heading">
+        <div>
+          <span class="eyebrow">POINT OF SALE</span>
+          <h1>Sales processing</h1>
+          <p class="muted">
+            Build an order, record payment, and dispatch available stock.
+          </p>
+        </div>
+        <a
+          class="button button-secondary"
+          href="/receipts"
+          data-permission="sales.read"
+          >View receipts</a
+        >
+      </section>
+      <div class="sales-layout">
+        <section class="card catalog-card">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">PRODUCT CATALOG</span>
+              <h2>Choose products</h2>
+            </div>
+            <span id="catalog-count" class="status status-neutral"
+              >Loading</span
+            >
+          </div>
+          <label class="sr-only" for="catalog-search">Search products</label
+          ><input
+            id="catalog-search"
+            class="search-input"
+            type="search"
+            placeholder="Search by item or SKU…"
+            autocomplete="off"
+          />
+          <div id="catalog-grid" class="catalog-grid" aria-live="polite">
+            <div class="loading-state">Loading catalog…</div>
+          </div>
+        </section>
+        <section class="card cart-card">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">CURRENT ORDER</span>
+              <h2>Cart <span id="cart-count" class="count-badge">0</span></h2>
+            </div>
+            <button id="clear-cart" class="text-button" type="button">
+              Clear
+            </button>
+          </div>
+          <div id="cart-items" class="cart-items">
+            <div class="empty-cart">
+              Add products from the catalog to get started.
+            </div>
+          </div>
+          <div class="cart-totals">
+            <div>
+              <span>Subtotal</span
+              ><strong id="cart-subtotal" class="mono">₱0.00</strong>
+            </div>
+            <label for="discount"
+              >Discount
+              <input
+                id="discount"
+                class="money-input"
+                type="number"
+                min="0"
+                step="0.01"
+                value="0"
+            /></label>
+            <div>
+              <span>VAT <small id="vat-rate-label"></small></span
+              ><strong id="cart-vat" class="mono">₱0.00</strong>
+            </div>
+            <div class="total-row">
+              <span>Total due</span
+              ><strong id="cart-total" class="mono">₱0.00</strong>
+            </div>
+          </div>
+          <form id="checkout-form" class="checkout-form">
+            <details class="customer-details">
+              <summary>Customer &amp; purchase order details</summary>
+              <div class="form-grid">
+                <label
+                  >Customer name<input
+                    name="customer_name"
+                    maxlength="160"
+                    placeholder="Walk-in customer" /></label
+                ><label>TIN<input name="tin" maxlength="40" /></label
+                ><label
+                  >Business style<input
+                    name="business_style"
+                    maxlength="120" /></label
+                ><label
+                  >Customer PO reference<input
+                    name="customer_po_reference"
+                    maxlength="80" /></label
+                ><label class="full-span"
+                  >Address<input name="address" maxlength="300"
+                /></label>
+              </div>
+            </details>
+            <div class="form-grid payment-fields">
+              <label
+                >Payment received (₱)<input
+                  id="payment"
+                  name="payment"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value="0"
+                  required /></label
+              ><label
+                >Payment method<select name="payment_method">
+                  <option>Cash</option>
+                  <option>Card</option>
+                  <option>Bank transfer</option>
+                  <option>Other</option>
+                </select></label
+              >
+            </div>
+            <button class="button button-primary button-wide" type="submit">
+              Save sale &amp; dispatch →
+            </button>
+            <p class="form-hint">
+              Only the available quantity will dispatch; the rest stays pending.
+            </p>
+          </form>
+        </section>
+      </div>
+      <section class="card table-card">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">TRANSACTION QUEUE</span>
+            <h2>Recent orders</h2>
+          </div>
+          <button
+            class="button button-quiet button-small"
+            data-refresh="sales"
+            type="button"
+          >
+            Refresh
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Receipt</th>
+                <th>Created</th>
+                <th>Customer</th>
+                <th>Order</th>
+                <th>Payment</th>
+                <th>Total</th>
+                <th>Paid</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="sales-table">
+              <tr>
+                <td colspan="8" class="empty-cell">Loading sales…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

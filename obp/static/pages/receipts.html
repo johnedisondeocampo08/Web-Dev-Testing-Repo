@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>View receipts · OBP</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="/static/js/app.js" defer></script>
+  </head>
+  <body data-page="receipts">
+    <main id="page-content">
+      <section class="page-heading">
+        <div>
+          <span class="eyebrow">TRANSACTION DOCUMENTS</span>
+          <h1>View receipts</h1>
+          <p class="muted">
+            Find a sale, review payments and dispatch, and print a customer
+            copy.
+          </p>
+        </div>
+      </section>
+      <section class="card">
+        <form id="receipt-search" class="search-row">
+          <label class="sr-only" for="receipt-query">Search receipts</label
+          ><input
+            id="receipt-query"
+            name="q"
+            type="search"
+            placeholder="Search receipt number or customer…"
+            autocomplete="off"
+          /><button class="button button-secondary" type="submit">
+            Search
+          </button>
+        </form>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Receipt</th>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="receipt-table">
+              <tr>
+                <td colspan="6" class="empty-cell">Loading receipts…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <dialog id="receipt-dialog" class="modal receipt-modal">
+        <div class="modal-content">
+          <div class="receipt-actions">
+            <button class="button button-quiet" type="button" data-close-dialog>
+              Close</button
+            ><button
+              class="button button-primary"
+              type="button"
+              onclick="window.print()"
+            >
+              Print
+            </button>
+          </div>
+          <div id="receipt-detail"></div>
+        </div>
+      </dialog>
+    </main>
+  </body>
+</html>

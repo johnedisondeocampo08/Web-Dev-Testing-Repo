@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Staff sign in · Optimum Business Products</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="/static/js/app.js" defer></script>
+  </head>
+  <body data-page="login">
+    <main class="login-layout">
+      <section class="login-story">
+        <a class="brand brand-light" href="/login"
+          ><span class="brand-mark">OB</span
+          ><span
+            ><strong>optimum</strong><small>BUSINESS PRODUCTS</small></span
+          ></a
+        >
+        <div class="login-message">
+          <span class="eyebrow eyebrow-light"
+            >INVENTORY &amp; SALES MANAGEMENT</span
+          >
+          <h1>Everything in<br />its right place.</h1>
+          <p>One clear view of your products, stock, purchasing, and sales.</p>
+        </div>
+        <div class="login-story-footer">
+          A smarter way to keep business moving.
+        </div>
+      </section>
+      <section class="login-panel">
+        <div class="login-form-wrap">
+          <span class="eyebrow">STAFF PORTAL</span>
+          <h2>Welcome back</h2>
+          <p class="muted">Sign in with your individual OBP account.</p>
+          <div
+            id="login-error"
+            class="notice notice-error"
+            role="alert"
+            hidden
+          ></div>
+          <form id="login-form" class="form-stack">
+            <label for="username">Username</label
+            ><input
+              id="username"
+              name="username"
+              autocomplete="username"
+              required
+              autofocus
+              maxlength="80"
+            />
+            <label for="password">Password</label
+            ><input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+            <button class="button button-primary button-wide" type="submit">
+              Sign in <span aria-hidden="true">→</span>
+            </button>
+          </form>
+          <p class="login-help">
+            Need access? Ask an administrator to create your staff account.
+          </p>
+        </div>
+        <footer class="login-copyright">
+          © Optimum Business Products · Internal use only
+        </footer>
+      </section>
+    </main>
+  </body>
+</html>
