@@ -776,15 +776,20 @@ async function initInventory() {
   });
   $("#adjustment-form")?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    const submitButton = form.querySelector('[type="submit"]');
+    submitButton.disabled = true;
     try {
       await api("/api/inventory/adjustments", {
         method: "POST",
-        body: JSON.stringify(serializeForm(event.currentTarget)),
+        body: JSON.stringify(serializeForm(form)),
       });
-      event.currentTarget.reset();
+      form.reset();
       toast("Adjustment request sent to an administrator for approval.");
     } catch (error) {
       toast(error.message, true);
+    } finally {
+      submitButton.disabled = false;
     }
   });
   await loadProducts();
@@ -952,29 +957,34 @@ async function initSuppliers() {
   });
   $("#purchase-order-form")?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    const submitButton = form.querySelector('[type="submit"]');
+    submitButton.disabled = true;
     try {
       await api("/api/purchase-orders", {
         method: "POST",
         body: JSON.stringify({
-          supplier_id: event.currentTarget.elements.supplier_id.value,
-          expected_date: event.currentTarget.elements.expected_date.value,
-          status: event.currentTarget.elements.status.value,
+          supplier_id: form.elements.supplier_id.value,
+          expected_date: form.elements.expected_date.value,
+          status: form.elements.status.value,
           items: [
             {
-              product_id: event.currentTarget.elements.product_id.value,
-              quantity: event.currentTarget.elements.quantity.value,
-              unit_cost: event.currentTarget.elements.unit_cost.value,
+              product_id: form.elements.product_id.value,
+              quantity: form.elements.quantity.value,
+              unit_cost: form.elements.unit_cost.value,
             },
           ],
         }),
       });
-      event.currentTarget.reset();
+      form.reset();
       toast(
         "Purchase order created. Receive accepted quantities when the delivery arrives.",
       );
       await loadOrders();
     } catch (error) {
       toast(error.message, true);
+    } finally {
+      submitButton.disabled = false;
     }
   });
   $("#purchase-order-table").addEventListener("click", async (event) => {
