@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Browse sample computer, printer, office equipment, and business supply listings from Optimum Business Products."
+    />
+    <title>Browse Products · Optimum Business Products</title>
+    <link rel="stylesheet" href="/OBP_website/styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/OBP_website/script.js" defer></script>
+  </head>
+  <body class="storefront">
+    <div class="store-announcement">
+      <p>Illustrative product listings · Not live inventory</p>
+      <a href="/">Return to storefront <span aria-hidden="true">→</span></a>
+    </div>
+    <header class="store-header">
+      <div class="store-header-inner mx-auto flex items-center justify-between">
+        <a class="store-brand" href="/" aria-label="Optimum Business Products home">
+          <span class="store-brand-mark" aria-hidden="true">O</span>
+          <span class="store-brand-name">optimum<small>BUSINESS PRODUCTS</small></span>
+        </a>
+        <button
+          class="store-menu-toggle"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="store-navigation"
+        >
+          <span></span><span></span>
+        </button>
+        <nav id="store-navigation" class="store-navigation" aria-label="Main navigation">
+          <a href="/">Home</a>
+          <a href="#products">Shop</a>
+          <a href="/#about">About us</a>
+          <a href="/#services">Services</a>
+          <a href="/#contact">Contact</a>
+          <a class="store-admin-link" href="/login">Admin portal <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="store-catalog-page">
+      <section class="store-catalog-intro">
+        <span class="store-eyebrow">OPTIMUM BUSINESS PRODUCTS · EST. 1996</span>
+        <h1>Products for your workday.</h1>
+        <p>
+          Explore sample computers, office machines, and business supplies.
+          Contact our team to confirm product models and availability.
+        </p>
+        <a class="store-text-link" href="/">← Back to the main website</a>
+      </section>
+
+      <section id="products" class="store-section store-products">
+        <div class="store-section-heading">
+          <div>
+            <span class="store-eyebrow">SAMPLE PRODUCT CATALOG</span>
+            <h2>Find what your business needs.</h2>
+          </div>
+          <p>Search listings or narrow them down by category and brand.</p>
+        </div>
+        <p class="store-catalog-note">
+          These examples are based on the company profile—not live inventory. Product models, prices, and availability must be confirmed with the store.
+        </p>
+        <div class="store-product-filters" role="search" aria-label="Filter sample products">
+          <label>
+            Search products
+            <input id="product-search" type="search" placeholder="Try “printer” or “laptop”" />
+          </label>
+          <label>
+            Category
+            <select id="product-category">
+              <option value="">All categories</option>
+              <option value="Computers &amp; parts">Computers &amp; parts</option>
+              <option value="Printers &amp; machines">Printers &amp; machines</option>
+              <option value="Business essentials">Business essentials</option>
+            </select>
+          </label>
+          <label>
+            Brand
+            <select id="product-brand">
+              <option value="">All brands</option>
+            </select>
+          </label>
+          <button id="clear-product-filters" class="store-filter-reset" type="button">Clear filters</button>
+        </div>
+        <p id="product-results" class="store-product-results" role="status" aria-live="polite"></p>
+        <div id="product-grid" class="store-product-grid"></div>
+        <p id="product-empty" class="store-product-empty" hidden>No sample products match those filters.</p>
+      </section>
+
+      <section class="store-catalog-return">
+        <div>
+          <span class="store-eyebrow">NEED HELP?</span>
+          <h2>Talk to the Optimum team.</h2>
+          <p>Ask us about current models, pricing, availability, or technical support.</p>
+        </div>
+        <a class="store-button store-button-primary" href="/#contact">
+          Contact us <span aria-hidden="true">↗</span>
+        </a>
+      </section>
+    </main>
+
+    <footer id="contact" class="store-footer">
+      <div class="store-footer-main store-catalog-footer-grid grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+        <div class="store-footer-brand">
+          <a class="store-brand" href="/" aria-label="Optimum Business Products home">
+            <span class="store-brand-mark" aria-hidden="true">O</span>
+            <span class="store-brand-name">optimum<small>BUSINESS PRODUCTS</small></span>
+          </a>
+          <p>Office machines, computer products, supplies, and technical services since 1996.</p>
+          <a
+            class="store-text-link"
+            href="https://maps.google.com/?q=1808+Cityland+Pasong+Tamo+Tower+Chino+Roces+Avenue+Makati+City"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Get directions <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <div class="store-footer-column">
+          <h2>Explore</h2>
+          <a href="/">Main website</a>
+          <a href="/#about">About us</a>
+          <a href="/#services">Services</a>
+          <a href="/login">Admin portal</a>
+        </div>
+        <div class="store-footer-column">
+          <h2>Opening hours</h2>
+          <p>Monday - Friday: 7:00 AM - 4:00 PM<br />Saturday - Sunday: Not open</p>
+        </div>
+        <div class="store-footer-column">
+          <h2>Visit &amp; contact</h2>
+          <address>
+            1808 Cityland Pasong Tamo Tower<br />
+            Chino Roces Avenue<br />
+            Makati City, Philippines
+          </address>
+          <a href="tel:+639999937848">09999937848</a>
+          <a href="mailto:optimumbusinessproducts.sai@yahoo.com">optimumbusinessproducts.sai@yahoo.com</a>
+          <a href="mailto:optimumbusinessproducts@yahoo.com">optimumbusinessproducts@yahoo.com</a>
+        </div>
+      </div>
+      <div class="store-footer-bottom">
+        <span>© <span id="store-year"></span> Optimum Business Products</span>
+        <a href="/">Return to main website</a>
+      </div>
+    </footer>
+    <audio
+      id="background-music"
+      src="/OBP_website/assets/WDDRRP%20TEASER%20MUSIC%20VIEDO%20RUTHLESS%20RECORDS.mp3"
+      loop
+      preload="none"
+    ></audio>
+    <div class="store-music-control">
+      <span id="music-status" class="store-music-status" role="status" aria-live="polite"></span>
+      <button
+        id="music-toggle"
+        class="store-music-toggle"
+        type="button"
+        aria-label="Play background music"
+        aria-pressed="false"
+        title="Play background music"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M11 5 6 9H3v6h3l5 4V5Z"></path>
+          <path class="store-music-icon-on" d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+          <path class="store-music-icon-on" d="M18.5 5.5a9 9 0 0 1 0 13"></path>
+          <path class="store-music-icon-off" d="m16 9 5 6m0-6-5 6"></path>
+        </svg>
+      </button>
+    </div>
+  </body>
+</html>

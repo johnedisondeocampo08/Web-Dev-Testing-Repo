@@ -26,6 +26,88 @@ class WebSecurityTests(unittest.TestCase):
     def tearDown(self):
         self.backup_dir.cleanup()
 
+    def test_homepage_is_public_and_offers_guest_and_staff_paths(self):
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Browse products", response.data)
+        self.assertIn(b'href="/login"', response.data)
+        self.assertIn(b'href="/OBP_website/styles.css"', response.data)
+        self.assertIn(b'<a href="/">Home</a>', response.data)
+        self.assertIn(b'src="/OBP_website/assets/about-team.png"', response.data)
+        self.assertIn(b'href="/OBP_website/products.html"', response.data)
+        self.assertIn(b'href="/OBP_website/products.html?category=Computers%20%26%20parts#products"', response.data)
+        self.assertNotIn(b'id="product-grid"', response.data)
+        self.assertIn(b'id="music-toggle"', response.data)
+        self.assertIn(b'src="/OBP_website/assets/WDDRRP%20TEASER%20MUSIC%20VIEDO%20RUTHLESS%20RECORDS.mp3"', response.data)
+        self.assertIn(b"Established in 1996", response.data)
+        self.assertIn(b"1808 Cityland Pasong Tamo Tower", response.data)
+        self.assertIn(b"Maintenance, upgrades", response.data)
+        self.assertIn(b'href="tel:+639999937848"', response.data)
+        self.assertIn(b"optimumbusinessproducts.sai@yahoo.com", response.data)
+        self.assertIn(b"optimumbusinessproducts@yahoo.com", response.data)
+        self.assertIn(b'href="#office-map"', response.data)
+        self.assertIn(b'<iframe', response.data)
+        self.assertIn(b"Google Maps showing Optimum Business Products", response.data)
+        self.assertIn(b"output=embed", response.data)
+        self.assertIn(b"maps.google.com", response.data)
+        explore_position = response.data.index(b"<h2>Explore</h2>")
+        hours_position = response.data.index(b"<h2>Opening hours</h2>")
+        visit_position = response.data.index(b"<h2>Visit &amp; contact</h2>")
+        self.assertLess(explore_position, hours_position)
+        self.assertLess(hours_position, visit_position)
+        response.close()
+
+        styles = self.client.get("/OBP_website/styles.css")
+        self.assertEqual(styles.status_code, 200)
+        self.assertIn(b".storefront", styles.data)
+        styles.close()
+
+        script = self.client.get("/OBP_website/script.js")
+        self.assertEqual(script.status_code, 200)
+        self.assertIn(b"store-menu-toggle", script.data)
+        self.assertIn(b"Fullmark", script.data)
+        script.close()
+
+        products = self.client.get("/OBP_website/products.html")
+        self.assertEqual(products.status_code, 200)
+        self.assertIn(b"Browse Products", products.data)
+        self.assertIn(b'<a href="/">Home</a>', products.data)
+        self.assertIn(b'id="product-grid"', products.data)
+        self.assertIn(b'id="product-category"', products.data)
+        self.assertIn(b'id="product-brand"', products.data)
+        self.assertIn(b'id="music-toggle"', products.data)
+        products.close()
+
+        music = self.client.get(
+            "/OBP_website/assets/WDDRRP%20TEASER%20MUSIC%20VIEDO%20RUTHLESS%20RECORDS.mp3"
+        )
+        self.assertEqual(music.status_code, 200)
+        self.assertEqual(music.mimetype, "audio/mpeg")
+        self.assertTrue(music.data)
+        music.close()
+
+        image = self.client.get("/OBP_website/assets/about-team.png")
+        self.assertEqual(image.status_code, 200)
+        self.assertEqual(image.mimetype, "image/png")
+        image.close()
+
+    def test_signed_in_staff_keep_the_existing_dashboard_homepage(self):
+        with self.client.session_transaction() as session:
+            session["user_id"] = 7
+        with patch("obp.auth.get_db") as get_db:
+            get_db.return_value.execute.return_value.fetchone.return_value = {
+                "id": 7,
+                "username": "admin",
+                "display_name": "Admin",
+                "active": True,
+                "role_name": "Administrator / Owner",
+                "permissions": ["*"],
+            }
+            response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'data-page="dashboard"', response.data)
+        response.close()
+
     def test_staff_sign_in_page_is_plain_html_and_needs_no_database(self):
         response = self.client.get("/login")
         self.assertEqual(response.status_code, 200)

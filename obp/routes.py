@@ -4,6 +4,7 @@ import secrets
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from html import escape
+from pathlib import Path
 
 from psycopg.errors import ForeignKeyViolation, UniqueViolation
 from flask import (
@@ -27,6 +28,7 @@ from .reports import best_sellers, daily_sales, default_range, monthly_sales, pr
 
 bp = Blueprint("routes", __name__)
 CENT = Decimal("0.01")
+WEBSITE_DIR = Path(__file__).resolve().parent.parent / "OBP_website"
 
 
 def _login_required():
@@ -114,7 +116,14 @@ def bad_request(error):
 
 @bp.route("/")
 def dashboard():
-    return _module_page("dashboard.html")
+    if g.user:
+        return _module_page("dashboard.html")
+    return send_from_directory(WEBSITE_DIR, "index.html")
+
+
+@bp.get("/OBP_website/<path:filename>")
+def website_asset(filename):
+    return send_from_directory(WEBSITE_DIR, filename)
 
 
 @bp.get("/api/dashboard")
