@@ -513,9 +513,6 @@ html {
   color: var(--store-muted);
   font-size: 11px;
 }
-.store-catalog-footer-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
 .store-catalog-note {
   margin: -7px 0 20px;
   padding: 12px 14px;
@@ -854,6 +851,9 @@ html {
   margin: 0 auto;
   padding: 54px 0 45px;
 }
+.store-catalog-footer-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
 .store-footer-brand > p,
 .store-footer-column > p,
 .store-footer-column address,
@@ -988,6 +988,9 @@ html {
   .store-footer-main {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 30px 24px;
+  }
+  .store-catalog-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .store-footer-brand {
     grid-column: span 2;
